@@ -1,0 +1,6 @@
+{
+  "name": "Hub FEMIC - Módulo de Ergonomia",
+  "description": "Sistema especializado para gestão de laudos ergonômicos (AET/LIP) e riscos ocupacionais (NR17/NR1), incluindo calculadoras RULA e REBA.",
+  "requestFramePermissions": [],
+  "majorCapabilities": []
+}

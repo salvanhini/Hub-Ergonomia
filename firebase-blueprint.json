@@ -1,0 +1,70 @@
+{
+  "entities": {
+    "Company": {
+      "title": "Empresa",
+      "description": "Empresas clientes que recebem a consultoria ergonômica.",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string", "description": "Razão Social" },
+        "cnpj": { "type": "string", "description": "CNPJ da empresa" },
+        "industry": { "type": "string", "description": "Ramo de atividade" }
+      },
+      "required": ["name", "cnpj"]
+    },
+    "Assessment": {
+      "title": "Laudo / Avaliação",
+      "description": "Documento de análise ergonômica (AET, LIP ou PGR).",
+      "type": "object",
+      "properties": {
+        "companyId": { "type": "string", "description": "Relacionamento com a empresa" },
+        "type": { "type": "string", "enum": ["AET", "LIP", "PGR"] },
+        "status": { "type": "string", "enum": ["Draft", "Completed", "Review"] },
+        "sector": { "type": "string", "description": "Setor analisado" },
+        "jobFunction": { "type": "string", "description": "Cargo avaliado" },
+        "date": { "type": "string", "format": "date-time" }
+      },
+      "required": ["companyId", "type", "status"]
+    },
+    "EvaluationResult": {
+      "title": "Resultado de Metodologia",
+      "description": "Dados genéricos de qualquer metodologia (RULA, REBA, NIOSH, etc).",
+      "type": "object",
+      "properties": {
+        "assessmentId": { "type": "string" },
+        "methodology": { "type": "string" },
+        "score": { "type": "number" },
+        "details": { "type": "object", "description": "Dados específicos de cada formulário" },
+        "recommendation": { "type": "string" }
+      }
+    },
+    "Norm": {
+      "title": "Norma Regulamentadora",
+      "description": "Textos legais e referências bibliográficas editáveis.",
+      "type": "object",
+      "properties": {
+        "code": { "type": "string", "description": "Ex: NR17" },
+        "title": { "type": "string" },
+        "content": { "type": "string" },
+        "lastUpdated": { "type": "string", "format": "date-time" }
+      }
+    }
+  },
+  "firestore": {
+    "/companies/{companyId}": {
+      "schema": "Company",
+      "description": "Coleção de empresas."
+    },
+    "/companies/{companyId}/assessments/{assessmentId}": {
+      "schema": "Assessment",
+      "description": "Laudos vinculados a cada empresa."
+    },
+    "/companies/{companyId}/assessments/{assessmentId}/rula": {
+      "schema": "RulaResult",
+      "description": "Resultados RULA de um laudo específico."
+    },
+    "/norms/{normId}": {
+      "schema": "Norm",
+      "description": "Módulo de Gerenciamento de Normas."
+    }
+  }
+}
